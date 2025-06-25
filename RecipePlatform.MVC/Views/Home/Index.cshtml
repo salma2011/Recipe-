@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Home";
+    var isLoggedIn = SignInManager.IsSignedIn(User);
+}
+
+<!-- Hero Section -->
+<div class="hero">
+    <div class="search-container">
+        <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Search for recipes...">
+    </div>
+</div>
+
+<!-- Welcome Message -->
+<div class="container text-center mt-5">
+    <h2>Welcome to RecipeHaven</h2>
+    <p class="text-muted">Discover delicious recipes from around the world.</p>
+
+    @if (!isLoggedIn)
+    {
+        <a href="/Account/Login" class="btn btn-outline-dark mx-2">Login</a>
+        <a href="/Account/Register" class="btn btn-dark">Register</a>
+    }
+    else
+    {
+        <p class="fw-bold">Hello, @UserManager.GetUserName(User)!</p>
+        <form method="post" asp-controller="Account" asp-action="Logout">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    }
+</div>
+
+<!-- Featured Recipes -->
+<div class="container my-5">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card recipe-card">
+                <img src="/images/p1.png" class="card-img-top" alt="Spaghetti Carbonara">
+                <div class="card-body">
+                    <h5 class="card-title">Spaghetti Carbonara</h5>
+                    <p class="card-text">Classic Italian pasta with cheese and pancetta.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card recipe-card">
+                <img src="/images/p2.png" class="card-img-top" alt="Garden Salad">
+                <div class="card-body">
+                    <h5 class="card-title">Garden Salad</h5>
+                    <p class="card-text">A refreshing mix of greens and vinaigrette.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card recipe-card">
+                <img src="/images/p3.png" class="card-img-top" alt="Pumpkin Soup">
+                <div class="card-body">
+                    <h5 class="card-title">Pumpkin Soup</h5>
+                    <p class="card-text">Comforting soup made with pumpkin and spices.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card recipe-card">
+                <img src="/images/p4.png" class="card-img-top" alt="Sushi Platter">
+                <div class="card-body">
+                    <h5 class="card-title">Sushi Platter</h5>
+                    <p class="card-text">Fresh sushi rolls with fish and veggies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
