@@ -1,9 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 @{
     ViewData["Title"] = "Home";
     var isLoggedIn = SignInManager.IsSignedIn(User);
+    bool isAdmin = false;
+    bool isUser = false;
+
+    if (isLoggedIn)
+    {
+        var currentUser = await UserManager.GetUserAsync(User);
+        if (currentUser != null)
+        {
+            isAdmin = await UserManager.IsInRoleAsync(currentUser, "Admin");
+            isUser = await UserManager.IsInRoleAsync(currentUser, "User");
+        }
+    }
 }
 
 <!-- Hero Section -->
@@ -26,7 +39,17 @@
     else
     {
         <p class="fw-bold">Hello, @UserManager.GetUserName(User)!</p>
-        <form method="post" asp-controller="Account" asp-action="Logout">
+
+        @if (isUser)
+        {
+            <a href="/Dashboard/Index" class="btn btn-primary mx-2">Dashboard</a>
+        }
+        @if (isAdmin)
+        {
+            <a href="/Admin/Index" class="btn btn-warning mx-2">Admin Panel</a>
+        }
+
+        <form method="post" asp-controller="Account" asp-action="Logout" class="d-inline">
             <button type="submit" class="btn btn-danger">Logout</button>
         </form>
     }

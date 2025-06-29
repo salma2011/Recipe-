@@ -11,8 +11,8 @@ namespace RecipePlatform.Models
         public string Description { get; set; }
         public string Ingredients { get; set; }
         public string Instructions { get; set; }
-        public int PrepTimeMinutes { get; set; }
-        public int CookTimeMinutes { get; set; }
+        public int PreparationTime { get; set; }
+        public int CookingTime { get; set; }
         public int Servings { get; set; }
         public DifficultyLevel Difficulty { get; set; }
 
@@ -23,5 +23,8 @@ namespace RecipePlatform.Models
         public Category Category { get; set; }
 
         public ICollection<Rating> Ratings { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public string? ImagePath { get; set; }
     }
 }

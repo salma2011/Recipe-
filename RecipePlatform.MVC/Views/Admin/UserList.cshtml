@@ -1,0 +1,50 @@
+﻿@model IEnumerable<RecipePlatform.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Manage Users</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>User Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                int count = 1;
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@user.Email</td>
+                        <td>@user.UserName</td>
+                        <td>
+                            <form asp-action="MakeAdmin" asp-controller="Admin" method="post" class="d-inline">
+                                <input type="hidden" name="userEmail" value="@user.Email" />
+                                <button type="submit" class="btn btn-sm btn-warning">
+                                    Make Admin
+                                </button>
+                            </form>
+                            <!-- يمكنك إضافة زر حذف أو تعديل لاحقاً -->
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No users found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

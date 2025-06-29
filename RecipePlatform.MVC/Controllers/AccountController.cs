@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RecipePlatform.DAL.Context;
 using RecipePlatform.Models;
 using RecipePlatform.PL.ViewModels;
 using System.Threading.Tasks;
@@ -9,15 +11,21 @@ namespace RecipePlatform.MVC.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
+                ApplicationDbContext context,
+
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager)
         {
+            _context = context;
+
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -129,8 +137,13 @@ namespace RecipePlatform.MVC.Controllers
         [Authorize]
         public IActionResult Dashboard()
         {
-            return View();
-        }
+            var userId = _userManager.GetUserId(User);
+            var recipes = _context.Recipes
+                .Where(r => r.UserId == userId)
+                .ToList();
+
+            return View(recipes);
+        }        
 
         // ——— حماية صفحة خاصة بالأدمن فقط ———
         [Authorize(Roles = "Admin")]

@@ -25,6 +25,9 @@ namespace RecipePlatform.MVC
             // ?? Repositories
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
             // ?? MVC + Razor Views
             builder.Services.AddControllersWithViews();
 

@@ -25,11 +25,12 @@ namespace RecipePlatform.DAL.Context
 
         }
 
+     
 
-        public DbSet<Category> categories { get; set; }
-        public DbSet<Recipe> recipes { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
 
-        public DbSet<Rating> rating { get; set; }
+        public DbSet<Rating> Rating { get; set; }
 
     }
 }

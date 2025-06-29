@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipePlatform.DAL.Context;
 
@@ -11,9 +12,11 @@ using RecipePlatform.DAL.Context;
 namespace RecipePlatform.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250626044804_update recep table ")]
+    partial class updatereceptable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,6 +284,9 @@ namespace RecipePlatform.DAL.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CookTimeMinutes")
+                        .HasColumnType("int");
+
                     b.Property<int>("CookingTime")
                         .HasColumnType("int");
 
@@ -307,6 +313,9 @@ namespace RecipePlatform.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("PrepTimeMinutes")
+                        .HasColumnType("int");
 
                     b.Property<int>("PreparationTime")
                         .HasColumnType("int");
